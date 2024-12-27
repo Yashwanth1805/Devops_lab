@@ -1,0 +1,14 @@
+git init
+git add .
+git commit -m "this is first"
+git branch -M main
+git remote add origin url
+git push -u origin main
+
+git remote set-url "url" for updating urls before any did
+git config --global user.email for changing email id
+git config --global user.name
+
+C:\Program Files\Jenkins for portnumber
+C:\ProgramData\Jenkins\.jenkins\secrets for admin password
+Control Panel\User Accounts\Credential Manager
