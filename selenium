@@ -1,54 +1,39 @@
 npm init -y
 npm install selenium-webdriver
 
-
-const { Builder, By, Key, until } = require('selenium-webdriver');
-
-
-async function example()  {
-    const driver = await new Builder().forBrowser('chrome').build();
-        await driver.get('https://www.google.com');
-        await driver.wait(until.titleContains('Google'), 10000);
-        console.log('Test Case 1 Passed: Title contains "Google"');
-
-        await driver.findElement(By.name('q')).sendKeys('Selenium', Key.RETURN);
-        await driver.wait(until.titleContains('Selenium'), 10000);
-        console.log('Test Case 2 Passed: Title contains "Selenium"');
-        const searchResults = await driver.findElements(By.css('div.g'));
-        console.log(`Test Case 3 Passed: Found ${searchResults.length} search results`);
-        const searchInput = await driver.findElement(By.name('q'));
-        const isSearchInputDisplayed = await searchInput.isDisplayed();
-        console.log(`Test Case 4 Passed: Search input box is displayed: ${isSearchInputDisplayed}`);
-        await driver.quit();
-    
+const {Builder,By,Key}=require('selenium-webdriver')
+async function example() {
+    let driver = await new Builder().forBrowser("chrome").build();
+    await driver.get("https://google.com");
+    await driver.findElement(By.name("q")).sendKeys("selenium",Key.RETURN)
 }
 
-example()
-
-
+example();
 
 //testcases
 
-
 const { Builder, By, Key, until } = require('selenium-webdriver');
 
+(async function testGoogleSearch() {
+    let driver = await new Builder().forBrowser('chrome').build();
 
-async function example()  {
-    const driver = await new Builder().forBrowser('chrome').build();
+    try {
+        // Test Case 1: Verify Google Homepage Opens
         await driver.get('https://www.google.com');
-        await driver.wait(until.titleContains('Google'), 10000);
-        console.log('Test Case 1 Passed: Title contains "Google"');
+        let searchBox = await driver.findElement(By.name('q'));
+        console.log('Test Case 1 Passed: Google homepage opened successfully.');
 
-        await driver.findElement(By.name('q')).sendKeys('Selenium', Key.RETURN);
-        await driver.wait(until.titleContains('Selenium'), 10000);
-        console.log('Test Case 2 Passed: Title contains "Selenium"');
-        const searchResults = await driver.findElements(By.css('div.g'));
-        console.log(`Test Case 3 Passed: Found ${searchResults.length} search results`);
-        const searchInput = await driver.findElement(By.name('q'));
-        const isSearchInputDisplayed = await searchInput.isDisplayed();
-        console.log(`Test Case 4 Passed: Search input box is displayed: ${isSearchInputDisplayed}`);
+        // Test Case 2: Verify Search Box Accepts Input
+        await searchBox.sendKeys('Prudhvi');
+        console.log('Test Case 2 Passed: Search box accepts input.');
+
+        // Test Case 3: Verify Search Results Are Displayed
+        await searchBox.sendKeys(Key.RETURN);
+        await driver.wait(until.titleContains('Prudhvi'), 5000);
+        console.log('Test Case 3 Passed: Search results are displayed.');
+    } catch (err) {
+        console.error('Test failed:', err);
+    } finally {
         await driver.quit();
-    
-}
-
-example()
+    }
+})();
